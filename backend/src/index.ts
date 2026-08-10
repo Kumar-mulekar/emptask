@@ -2,6 +2,8 @@ import 'dotenv/config';
 import Fastify, { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import cors from '@fastify/cors';
 import { prisma } from './db';
+import { employeeRoutes } from './routes/employees';
+import { analyticsRoutes } from './routes/analytics';
 
 const PORT = parseInt(process.env.PORT || '3001', 10);
 const HOST = process.env.HOST || '0.0.0.0';
@@ -51,12 +53,8 @@ export async function buildApp(): Promise<FastifyInstance> {
     };
   });
 
-  // Employee API Routes
-  const { employeeRoutes } = await import('./routes/employees');
+  // API Routes
   await app.register(employeeRoutes, { prefix: '/api/employees' });
-
-  // Analytics API Routes
-  const { analyticsRoutes } = await import('./routes/analytics');
   await app.register(analyticsRoutes, { prefix: '/api/analytics' });
 
   return app;

@@ -35,21 +35,21 @@ describe('Phase E — Analytics Service & Route Unit Tests', () => {
         count: 3200,
       },
     ] as any);
-    vi.mocked(prisma.employee.groupBy).mockImplementation(async (args: any) => {
+    (vi.mocked(prisma.employee.groupBy) as any).mockImplementation(async (args: any) => {
       if (args.by.includes('department')) {
         return [
           { department: 'Engineering', _count: { _all: 1800 } },
           { department: 'Product', _count: { _all: 900 } },
-        ] as any;
+        ];
       }
       if (args.by.includes('employmentType')) {
         return [
           { employmentType: 'Full-time', _count: { _all: 8200 } },
           { employmentType: 'Contract', _count: { _all: 1100 } },
           { employmentType: 'Part-time', _count: { _all: 700 } },
-        ] as any;
+        ];
       }
-      return [] as any;
+      return [];
     });
 
     const result = await getAnalyticsSummary();
@@ -95,14 +95,14 @@ describe('Phase E — Analytics Service & Route Unit Tests', () => {
         count: 2800,
       },
     ] as any);
-    vi.mocked(prisma.employee.groupBy).mockImplementation(async (args: any) => {
+    (vi.mocked(prisma.employee.groupBy) as any).mockImplementation(async (args: any) => {
       if (args.by.includes('department')) {
-        return [{ department: 'Engineering', _count: { _all: 1800 } }] as any;
+        return [{ department: 'Engineering', _count: { _all: 1800 } }];
       }
       if (args.by.includes('employmentType')) {
-        return [{ employmentType: 'Full-time', _count: { _all: 8200 } }] as any;
+        return [{ employmentType: 'Full-time', _count: { _all: 8200 } }];
       }
-      return [] as any;
+      return [];
     });
 
     const res = await app.inject({

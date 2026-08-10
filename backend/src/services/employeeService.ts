@@ -1,57 +1,20 @@
 import { Prisma, Employee as PrismaEmployee } from '@prisma/client';
 import { prisma } from '../db';
+import { AppError } from '../errors/appError';
+import {
+  CreateEmployeeDTO,
+  EmployeeResponseDTO,
+  GetEmployeesParams,
+  UpdateEmployeeDTO,
+} from '../dtos/employee.dto';
 
-export interface EmployeeResponseDTO {
-  id: string;
-  fullName: string;
-  department: string;
-  jobTitle: string;
-  employmentType: string;
-  hireDate: string;
-  country: string;
-  currency: string;
-  salary: string;
-  isActive: boolean;
-}
-
-export interface GetEmployeesParams {
-  page?: number;
-  limit?: number;
-  search?: string;
-  country?: string;
-  department?: string;
-  employmentType?: string;
-}
-
-export interface CreateEmployeeDTO {
-  fullName: string;
-  department: string;
-  jobTitle: string;
-  employmentType: string;
-  hireDate: string;
-  country: string;
-  currency: string;
-  salary: number;
-}
-
-export interface UpdateEmployeeDTO {
-  fullName: string;
-  department: string;
-  jobTitle: string;
-  employmentType: string;
-  hireDate: string;
-  country: string;
-  currency: string;
-  salary: number;
-}
-
-export class AppError extends Error {
-  statusCode: number;
-  constructor(message: string, statusCode: number) {
-    super(message);
-    this.statusCode = statusCode;
-  }
-}
+export { AppError };
+export type {
+  CreateEmployeeDTO,
+  EmployeeResponseDTO,
+  GetEmployeesParams,
+  UpdateEmployeeDTO,
+};
 
 export function mapEmployeeToDTO(emp: PrismaEmployee): EmployeeResponseDTO {
   return {

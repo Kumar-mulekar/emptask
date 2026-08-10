@@ -1,30 +1,17 @@
 import { prisma } from '../db';
+import {
+  AnalyticsSummaryDTO,
+  CountrySalaryAnalyticsDTO,
+  DepartmentHeadcountDTO,
+  EmploymentTypeHeadcountDTO,
+} from '../dtos/analytics.dto';
 
-export interface CountrySalaryAnalyticsDTO {
-  country: string;
-  currency: string;
-  avgSalary: string;
-  minSalary: string;
-  maxSalary: string;
-  count: number;
-}
-
-export interface DepartmentHeadcountDTO {
-  department: string;
-  count: number;
-}
-
-export interface EmploymentTypeHeadcountDTO {
-  employmentType: string;
-  count: number;
-}
-
-export interface AnalyticsSummaryDTO {
-  headcount: number;
-  byCountry: CountrySalaryAnalyticsDTO[];
-  byDepartment: DepartmentHeadcountDTO[];
-  byEmploymentType: EmploymentTypeHeadcountDTO[];
-}
+export type {
+  AnalyticsSummaryDTO,
+  CountrySalaryAnalyticsDTO,
+  DepartmentHeadcountDTO,
+  EmploymentTypeHeadcountDTO,
+};
 
 interface RawCountryQueryResult {
   country: string;

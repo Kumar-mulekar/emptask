@@ -5,10 +5,12 @@ import {
   getEmployeeById,
   getEmployees,
   updateEmployee,
+} from '../services/employeeService';
+import {
   CreateEmployeeDTO,
   GetEmployeesParams,
   UpdateEmployeeDTO,
-} from '../services/employeeService';
+} from '../dtos/employee.dto';
 import {
   createEmployeeSchema,
   employeeIdParamsSchema,

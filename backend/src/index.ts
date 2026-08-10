@@ -51,6 +51,14 @@ export async function buildApp(): Promise<FastifyInstance> {
     };
   });
 
+  // Employee API Routes
+  const { employeeRoutes } = await import('./routes/employees');
+  await app.register(employeeRoutes, { prefix: '/api/employees' });
+
+  // Analytics API Routes
+  const { analyticsRoutes } = await import('./routes/analytics');
+  await app.register(analyticsRoutes, { prefix: '/api/analytics' });
+
   return app;
 }
 

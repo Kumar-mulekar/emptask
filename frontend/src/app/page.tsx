@@ -55,7 +55,7 @@ export default function DashboardPage() {
 
       {isLoading ? (
         <div className="bg-white rounded-xl border border-slate-200 p-16 text-center shadow-xs">
-          <LoadingSpinner message="Calculating real-time analytics aggregations..." size={36} />
+          <LoadingSpinner message="Loading dashboard analytics..." size={36} />
         </div>
       ) : isError ? (
         <ErrorMessage
@@ -78,7 +78,7 @@ export default function DashboardPage() {
                     {data.headcount.toLocaleString()} Active Employees
                   </h2>
                   <p className="text-xs text-slate-400 mt-1">
-                    Excludes deactivated employee records. Computed via server-side PostgreSQL aggregation.
+                    Total count of active personnel across global operations.
                   </p>
                 </div>
                 <div className="p-3 bg-blue-600/30 text-blue-400 rounded-xl border border-blue-500/30">
@@ -146,9 +146,14 @@ export default function DashboardPage() {
                       <span>Top Country Share</span>
                       <span className="font-bold">
                         {data.byCountry.length > 0 && data.headcount > 0
-                          ? `${data.byCountry[0].country} (${Math.round(
-                              (data.byCountry[0].count / data.headcount) * 100
-                            )}%)`
+                          ? (() => {
+                              const topCountry = data.byCountry.reduce(
+                                (max, c) => (c.count > max.count ? c : max),
+                                data.byCountry[0]
+                              );
+                              const pct = Math.round((topCountry.count / data.headcount) * 100);
+                              return `${topCountry.country} (${pct}%)`;
+                            })()
                           : 'N/A'}
                       </span>
                     </div>
@@ -157,7 +162,7 @@ export default function DashboardPage() {
               </div>
 
               <div className="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-400">
-                100% active employee compliance
+                Active workforce metrics
               </div>
             </div>
           </div>
@@ -171,7 +176,7 @@ export default function DashboardPage() {
                   Salary Metrics by Country
                 </h2>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Aggregated salary statistics grouped strictly per country and native currency code.
+                  Aggregated salary statistics grouped per country and native currency.
                 </p>
               </div>
             </div>
@@ -180,7 +185,7 @@ export default function DashboardPage() {
             <div className="bg-blue-50/70 border-b border-blue-100 px-5 py-2.5 text-xs text-blue-800 flex items-center gap-2">
               <Info size={15} className="text-blue-600 shrink-0" />
               <span>
-                <strong>Currency Isolation Guarantee:</strong> All salary metrics are reported in local ISO currency codes. Currencies are never converted or combined.
+                <strong>Currency Note:</strong> All salary metrics are reported in native local currencies.
               </span>
             </div>
 
@@ -267,7 +272,7 @@ export default function DashboardPage() {
               <div className="bg-amber-50/60 border-t border-amber-100 p-3.5 text-xs text-amber-900 flex items-center gap-2">
                 <Info size={14} className="text-amber-600 shrink-0" />
                 <span>
-                  <strong>Headcount Only:</strong> Department salary aggregations are excluded per organisation compliance policy.
+                  <strong>Department Breakdown:</strong> Showing active headcount distribution across teams.
                 </span>
               </div>
             </div>
@@ -323,7 +328,7 @@ export default function DashboardPage() {
               </div>
 
               <div className="bg-slate-50 border-t border-slate-200 p-3.5 text-xs text-slate-500 text-center">
-                All metrics derived from active database records
+                Live organizational metrics
               </div>
             </div>
           </div>

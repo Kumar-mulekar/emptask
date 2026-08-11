@@ -53,9 +53,9 @@ export function DeactivateConfirmModal({
             Are you sure you want to deactivate <strong className="text-slate-900">{employee.fullName}</strong>?
           </p>
           <div className="rounded-lg bg-amber-50 border border-amber-200 p-3 text-xs text-amber-800">
-            <p className="font-semibold">Soft-Delete Behavior:</p>
+            <p className="font-semibold">Deactivation Notice:</p>
             <p className="mt-0.5">
-              This will set <code className="bg-amber-100 px-1 py-0.5 rounded">isActive = false</code>. The employee record is retained in the database for audit integrity but will no longer appear in active employee listings.
+              Deactivating an employee removes them from active listings while preserving historical records for compliance and audit reporting.
             </p>
           </div>
         </div>

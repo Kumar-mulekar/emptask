@@ -71,7 +71,7 @@ The system must allow the HR Manager to:
 | `job_title` | Their role/designation |
 | `employment_type` | Full-time, Part-time, or Contract |
 | `hire_date` | Date they joined the organisation |
-| `country` | Country of employment |
+| `country` | Country of employment — canonical full English country name (e.g. United States, United Kingdom, United Arab Emirates, India) |
 | `currency` | Currency code (e.g. INR, USD, GBP) — native to their country |
 | `salary` | Current **annual** base salary in native currency |
 | `is_active` | Boolean — `true` for active employees, `false` for deactivated (soft-deleted) |

@@ -1,3 +1,5 @@
+import { CANONICAL_COUNTRIES, ISO_4217_CURRENCIES } from '../utils/validationConstants';
+
 export const getEmployeesQuerySchema = {
   type: 'object',
   properties: {
@@ -19,8 +21,8 @@ export const createEmployeeSchema = {
     jobTitle: { type: 'string', minLength: 1 },
     employmentType: { type: 'string', enum: ['Full-time', 'Part-time', 'Contract'] },
     hireDate: { type: 'string', format: 'date' },
-    country: { type: 'string', minLength: 1 },
-    currency: { type: 'string', minLength: 3, maxLength: 3 },
+    country: { type: 'string', enum: CANONICAL_COUNTRIES },
+    currency: { type: 'string', enum: ISO_4217_CURRENCIES },
     salary: { type: 'number', exclusiveMinimum: 0 },
   },
   additionalProperties: false,
@@ -35,8 +37,8 @@ export const updateEmployeeSchema = {
     jobTitle: { type: 'string', minLength: 1 },
     employmentType: { type: 'string', enum: ['Full-time', 'Part-time', 'Contract'] },
     hireDate: { type: 'string', format: 'date' },
-    country: { type: 'string', minLength: 1 },
-    currency: { type: 'string', minLength: 3, maxLength: 3 },
+    country: { type: 'string', enum: CANONICAL_COUNTRIES },
+    currency: { type: 'string', enum: ISO_4217_CURRENCIES },
     salary: { type: 'number', exclusiveMinimum: 0 },
   },
   additionalProperties: false,

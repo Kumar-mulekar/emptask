@@ -133,6 +133,7 @@ model Employee {
 - Indexes on `country`, `department`, `employmentType`, and `isActive` — the columns used in WHERE clauses
 - No index on `fullName` — a B-tree index cannot accelerate leading-wildcard searches (`ILIKE '%query%'`). At 10,000 rows a sequential scan is sufficient (~1–5ms). A trigram index (`pg_trgm`) would be the correct approach if the dataset grows significantly.
 - `currency` stored alongside `salary` — values are never mixed or converted across currencies
+- `country` validation uses canonical full English country names (e.g. `United States`, `United Kingdom`, `United Arab Emirates`, `India`) validated authoritatively on the backend via Fastify/Ajv schema `enum`. Abbreviations like `USA`, `UK`, `UAE` are not accepted. `currency` is authoritatively validated against the ISO 4217 currency list.
 
 ---
 

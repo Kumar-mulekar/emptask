@@ -26,8 +26,9 @@ import { LoadingSpinner } from '@/components/shared/LoadingSpinner';
 import { ErrorMessage } from '@/components/shared/ErrorMessage';
 import { EmployeeFormModal } from '@/components/employees/EmployeeFormModal';
 import { DeactivateConfirmModal } from '@/components/employees/DeactivateConfirmModal';
+import { CANONICAL_COUNTRIES } from '@/lib/constants';
 
-const COUNTRIES = ['USA', 'India', 'UK', 'Germany', 'Canada', 'Australia', 'Singapore', 'Japan'];
+const COUNTRIES = CANONICAL_COUNTRIES;
 const DEPARTMENTS = [
   'Engineering',
   'Product',

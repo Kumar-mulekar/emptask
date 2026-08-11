@@ -3,6 +3,11 @@
 import React, { useEffect, useState } from 'react';
 import { X, Loader2 } from 'lucide-react';
 import { CreateEmployeeInput, Employee } from '@/types/employee';
+import {
+  CANONICAL_COUNTRIES,
+  ISO_4217_CURRENCIES,
+  COUNTRY_CURRENCY_DEFAULT_MAP,
+} from '@/lib/constants';
 
 interface EmployeeFormModalProps {
   isOpen: boolean;
@@ -11,17 +16,6 @@ interface EmployeeFormModalProps {
   initialData?: Employee | null;
   isLoading?: boolean;
 }
-
-const COUNTRY_CURRENCY_MAP: Record<string, string> = {
-  USA: 'USD',
-  India: 'INR',
-  UK: 'GBP',
-  Germany: 'EUR',
-  Canada: 'CAD',
-  Australia: 'AUD',
-  Singapore: 'SGD',
-  Japan: 'JPY',
-};
 
 const DEPARTMENTS = [
   'Engineering',
@@ -49,7 +43,7 @@ export function EmployeeFormModal({
     jobTitle: '',
     employmentType: 'Full-time',
     hireDate: new Date().toISOString().split('T')[0],
-    country: 'USA',
+    country: 'United States',
     currency: 'USD',
     salary: 80000,
   });
@@ -75,7 +69,7 @@ export function EmployeeFormModal({
         jobTitle: '',
         employmentType: 'Full-time',
         hireDate: new Date().toISOString().split('T')[0],
-        country: 'USA',
+        country: 'United States',
         currency: 'USD',
         salary: 80000,
       });
@@ -86,8 +80,12 @@ export function EmployeeFormModal({
   if (!isOpen) return null;
 
   const handleCountryChange = (country: string) => {
-    const currency = COUNTRY_CURRENCY_MAP[country] || 'USD';
-    setFormData((prev) => ({ ...prev, country, currency }));
+    const defaultCurrency = COUNTRY_CURRENCY_DEFAULT_MAP[country];
+    setFormData((prev) => ({
+      ...prev,
+      country,
+      currency: defaultCurrency || prev.currency,
+    }));
   };
 
   const validate = (): boolean => {
@@ -115,7 +113,7 @@ export function EmployeeFormModal({
       await onSubmit(formData);
       onClose();
     } catch {
-      // Error handled by parent / Toast / Banner
+      // Error handled by parent component / banner
     }
   };
 
@@ -237,7 +235,7 @@ export function EmployeeFormModal({
                 onChange={(e) => handleCountryChange(e.target.value)}
                 className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                {Object.keys(COUNTRY_CURRENCY_MAP).map((c) => (
+                {CANONICAL_COUNTRIES.map((c) => (
                   <option key={c} value={c}>
                     {c}
                   </option>
@@ -249,14 +247,17 @@ export function EmployeeFormModal({
               <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
                 Currency Code *
               </label>
-              <input
-                type="text"
+              <select
                 value={formData.currency}
-                onChange={(e) => setFormData({ ...formData, currency: e.target.value.toUpperCase() })}
-                maxLength={3}
-                placeholder="USD"
-                className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm uppercase bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+                onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+              >
+                {ISO_4217_CURRENCIES.map((curr) => (
+                  <option key={curr} value={curr}>
+                    {curr}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 

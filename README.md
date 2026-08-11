@@ -52,4 +52,5 @@ npm run dev            # Start dev server on port 3000
 | [`docs/requirements.md`](docs/requirements.md) | Product requirements and scope |
 | [`docs/architecture.md`](docs/architecture.md) | Technical architecture decisions |
 | [`docs/implementation-plan.md`](docs/implementation-plan.md) | Step-by-step implementation plan |
+| [`docs/tradeoffs.md`](docs/tradeoffs.md) | Architecture trade-offs and decision record |
 | [`docs/ai-workflow.md`](docs/ai-workflow.md) | AI tool usage and review process |

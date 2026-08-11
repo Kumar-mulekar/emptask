@@ -140,6 +140,35 @@ The following issues were identified during the review — they were in the AI-g
 
 ---
 
+## Implementation & Validation Phases (Phases B – J)
+
+**AI role:** Implemented the approved phases incrementally (Phase B seed generator through Phase J final delivery).
+
+### Key Implementation AI Corrections & Refinements:
+
+1. **Phase B (Seed Generator):**
+   - Implemented 100% deterministic Mulberry32 PRNG generator (`seedDatabase(42, 10000)`).
+   - Generated 10,000 realistic records in 500-record batches to avoid Neon serverless timeout.
+
+2. **Phase C – E (Backend API & Services):**
+   - Implemented layered Fastify architecture (`Routes -> Services -> Prisma`).
+   - Managed Prisma 5 type compatibility (`NormalizedProcedure`, `EmployeeGroupByArgs`, `Decimal` serialization).
+   - Used raw SQL (`$queryRaw`) for `GROUP BY country, currency` to ensure native multi-currency aggregation without in-memory JS processing.
+
+3. **Phase F – H (Frontend & Analytics UI):**
+   - Implemented Next.js App Router, TanStack Query client with automatic cache invalidation on mutations (`useCreateEmployee`, `useUpdateEmployee`, `useDeactivateEmployee`).
+   - **UI Language Correction:** Refactored developer jargon (e.g. `isActive = false`, `PostgreSQL aggregation`) into clean, professional business language for HR users.
+
+4. **Authoritative Country & Currency Validation Correction:**
+   - **User Feedback:** Identified freeform currency text box and fixed 8-country frontend dropdown discrepancies.
+   - **Architectural Solution:** Enforced **canonical full English country names** (e.g. `United States`, `United Kingdom`, `United Arab Emirates`, `India`) and **ISO 4217 currency codes** authoritatively via Fastify/Ajv schema `enum` validation. Rejected abbreviations (`USA`, `UK`, `UAE`) and invalid codes with standard `400 Bad Request`.
+
+5. **Phase I – J (Testing & Validation):**
+   - Built 41 total unit and integration tests across backend (Vitest + Prisma mock + real PostgreSQL) and frontend (Vitest + React Testing Library + JSDOM).
+   - Verified clean production builds (`npm run build`) and zero TypeScript errors (`tsc --noEmit`).
+
+---
+
 ## Key Principle Demonstrated
 
 > AI is a capable first-draft generator and option generator — but architectural and technical claims must be reviewed critically by the engineer. The review phase caught 7 significant issues in AI-generated output, all of which were corrected before implementation began.
@@ -148,4 +177,4 @@ This is what intentional AI use looks like: use AI to accelerate, review AI outp
 
 ---
 
-*Document version: 1.0 | Date: August 2026 | Updated progressively throughout development*
+*Document version: 1.1 | Date: August 2026 | Updated upon Phase J completion*
